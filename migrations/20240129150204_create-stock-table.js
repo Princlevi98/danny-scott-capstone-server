@@ -3,11 +3,19 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("stocks", function (table) {
-    table.increments("stock_id").primary();
+  return knex.schema.createTable("stock", function (table) {
+    table.increments("id").primary();
+    table
+      .integer("location_id")
+      .unsigned()
+      .references("location.id")
+      .onUpdate("CASCADE")
+      .onDelete("CASCADE");
     table.string("item_name").notNullable();
+    // table.string("status").notNullable();
+
     table.integer("quantity").notNullable();
-    table.text("description").notNullable();
+    table.string("description").notNullable();
     table.timestamp("created_at").defaultTo(knex.fn.now());
     table
       .timestamp("updated_at")
@@ -20,5 +28,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTable("stocks");
+  return knex.schema.dropTable("stock");
 };
