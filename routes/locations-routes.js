@@ -7,11 +7,11 @@ const {
   edit,
   stock,
   remove,
-} = require("../controllers/location-controller");
-const {
-  validateLocationBody,
-  validateLocationId,
-} = require("../middleware/validation-middleware");
+} = require("../controller");
+// const {
+//   validateLocationBody,
+//   validateLocationId,
+// } = require("../middleware/validation-middleware");
 
 router.route("/").get(index).post(validateLocationBody, createNew);
 
