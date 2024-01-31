@@ -7,20 +7,16 @@ const {
   edit,
   stock,
   remove,
-} = require("../controller");
+} = require("../controllers/locations-controller");
 // const {
 //   validateLocationBody,
 //   validateLocationId,
 // } = require("../middleware/validation-middleware");
 
-router.route("/").get(index).post(validateLocationBody, createNew);
+router.route("/").get(index).post(createNew);
 
-router.use("/:locationId", validateLocationId);
-router
-  .route("/:locationId")
-  .get(findLocation)
-  .put(validateLocationBody, edit)
-  .delete(remove);
+router.use("/:locationId");
+router.route("/:locationId").get(findLocation).put(edit).delete(remove);
 
 router.route("/:locationId/stock").get(stock);
 

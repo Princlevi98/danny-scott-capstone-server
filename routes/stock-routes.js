@@ -1,26 +1,26 @@
-const express = require("express");
-const router = express.Router();
+// const express = require("express");
+// const router = express.Router();
 
-const {
-  index,
-  newItem,
-  findItem,
-  edit,
-  remove,
-} = require("../controllers/stock-controller");
+// const {
+//   index,
+//   newItem,
+//   findItem,
+//   edit,
+//   remove,
+// } = require("../controllers/stock-controller");
 
-const {
-  validateStockId,
-  validateItemBody,
-} = require("../middleware/validation-middleware");
+// const {
+//   validateStockId,
+//   validateItemBody,
+// } = require("../middleware/validation-middleware");
 
-router.route("/").get(index).post(validateItemBody, newItem);
+// router.route("/").get(index).post(validateItemBody, newItem);
 
-router.use("/:stockId", validateStockId);
-router
-  .route("/:stockId")
-  .get(findItem)
-  .put(validateItemBody, edit)
-  .delete(remove);
+// router.use("/:stockId", validateStockId);
+// router
+//   .route("/:stockId")
+//   .get(findItem)
+//   .put(validateItemBody, edit)
+//   .delete(remove);
 
-module.exports = router;
+// module.exports = router;
