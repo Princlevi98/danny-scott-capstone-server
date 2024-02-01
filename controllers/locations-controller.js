@@ -33,9 +33,9 @@ const createNew = async (req, res) => {
   }
 };
 const findLocation = async (req, res) => {
-  const { warehouseId: id } = req.params;
+  const { locationId: id } = req.params;
   try {
-    const data = await knex("locationss")
+    const data = await knex("locations")
       .where({ id: id })
       .first()
       .select("id", "location_name", "contact", "number");
