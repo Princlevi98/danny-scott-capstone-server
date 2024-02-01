@@ -15,7 +15,7 @@ const {
 
 router.route("/").get(index).post(createNew);
 
-router.use("/:locationId");
+// router.use("/:locationId");
 router.route("/:locationId").get(findLocation).put(edit).delete(remove);
 
 router.route("/:locationId/stock").get(stock);
