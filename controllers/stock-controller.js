@@ -3,7 +3,7 @@ const knex = require("knex")(require("../knexfile"));
 const index = async (_req, res) => {
   try {
     const data = await knex("locations")
-      .join("stock", "stock.locations_id", "locations.id")
+      .join("stock", "stock.location_id", "locations.id")
       .select(
         "stock.id",
         "location_name",
@@ -18,21 +18,24 @@ const index = async (_req, res) => {
 };
 
 const findItem = async (req, res) => {
-  const { stockId: id } = req.params;
+  const id = req.params.stockId;
+  console.log(id);
   try {
     const data = await knex("stock")
-      .join("loocations", "locations.id", "stock.locations_id")
+      .join("locations", "locations.id", "stock.location_id")
       .where({ "stock.id": id })
       .first()
       .select(
         "stock.id",
-        "location_name",
-        "locations_id",
-        "item_name",
-        "quantity",
-        "description"
+        "locations.id",
+        "stock.item_name",
+        "stock.quantity",
+        "stock.description"
       );
-    res.json(data);
+    if (!data) {
+      return res.status(404).send(`stock id ${id} not found`);
+    }
+    res.status(200).json(data);
   } catch (error) {
     res.status(404).json({ message: "Unable to get stock item.", error });
   }

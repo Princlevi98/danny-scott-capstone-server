@@ -15,8 +15,6 @@ const {
 // } = require("../middleware/validation-middleware");
 
 router.route("/").get(index).post(newItem);
-
-// router.use("/:stockId", validateStockId);
 router.route("/:stockId").get(findItem).put(edit).delete(remove);
 
 module.exports = router;
