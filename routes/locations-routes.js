@@ -20,4 +20,8 @@ router.route("/:locationId").get(findLocation).put(edit).delete(remove);
 
 router.route("/:locationId/stock").get(stock);
 
+// trying to get specific stock in from location
+
+router.route("/:locationId/stockId").get(stock);
+
 module.exports = router;

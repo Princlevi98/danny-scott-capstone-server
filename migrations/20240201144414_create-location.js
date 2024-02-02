@@ -14,7 +14,6 @@ exports.up = function (knex) {
       .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
   });
 };
-
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }

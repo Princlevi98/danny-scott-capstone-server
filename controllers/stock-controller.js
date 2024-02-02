@@ -19,7 +19,6 @@ const index = async (_req, res) => {
 
 const findItem = async (req, res) => {
   const id = req.params.stockId;
-  console.log(id);
   try {
     const data = await knex("stock")
       .join("locations", "locations.id", "stock.location_id")
@@ -44,11 +43,11 @@ const findItem = async (req, res) => {
 const newItem = async (req, res) => {
   try {
     const result = await knex("stock").insert(req.body);
-    const createdInventory = await knex("stock")
+    const createdStock = await knex("stock")
       .where({ id: result[0] })
       .first()
-      .select("id", "locations_id", "item_name", "quantity", "description");
-    res.json(createdInventory);
+      .select("id", "location_id", "item_name", "quantity", "description");
+    res.json(createdStock);
   } catch (error) {
     res.status(500).json({
       message: `Unable to create new item: ${error}`,

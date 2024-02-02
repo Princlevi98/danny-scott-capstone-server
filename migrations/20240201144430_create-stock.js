@@ -5,12 +5,15 @@
 exports.up = function (knex) {
   return knex.schema.createTable("stock", function (table) {
     table.increments("id").primary();
-    table.integer("location_id").unsigned().references("locations.id");
+    table
+      .integer("location_id")
+      .unsigned()
+      .references("locations.id")
+      .notNullable();
     //   .onUpdate("CASCADE")
     //   .onDelete("CASCADE");
     table.string("item_name").notNullable();
     // table.string("status").notNullable();
-
     table.integer("quantity").notNullable();
     table.string("description").notNullable();
     table.timestamp("created_at").defaultTo(knex.fn.now());
@@ -19,7 +22,6 @@ exports.up = function (knex) {
       .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
   });
 };
-
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }

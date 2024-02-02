@@ -34,6 +34,7 @@ const createNew = async (req, res) => {
 };
 const findLocation = async (req, res) => {
   const { locationId: id } = req.params;
+
   try {
     const data = await knex("locations")
       .where({ id: id })
@@ -66,7 +67,7 @@ const edit = async (req, res) => {
 const stock = async (req, res) => {
   try {
     const items = await knex("locations")
-      .join("stock", "stock.location_id", "location.id")
+      .join("stock", "stock.location_id", "locations.id")
       .where({ location_id: req.params.locationId })
       .select("stock.id", "item_name", "quantity", "description");
 
