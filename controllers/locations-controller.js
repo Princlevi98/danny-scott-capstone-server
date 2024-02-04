@@ -82,7 +82,7 @@ const stock = async (req, res) => {
 const remove = async (req, res) => {
   const { locationId: id } = req.params;
   try {
-    await knex("locations").where({ id }).delete();
+    await knex("locations").where({ id }).del();
     res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ message: "Unable to delete location.", error });

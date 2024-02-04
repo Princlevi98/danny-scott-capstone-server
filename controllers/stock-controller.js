@@ -82,5 +82,46 @@ const remove = async (req, res) => {
     res.status(500).json({ message: "Unable to delete stock item.", error });
   }
 };
+const reduceStockQuantity = async (req, res) => {
+  const { locationId, itemId } = req.params;
+  const { quantityToReduce } = req.body; // Assuming you pass the quantity to reduce in the request body
 
-module.exports = { index, findItem, newItem, edit, remove };
+  try {
+    // Fetch the current stock item
+    const stockItem = await knex("stock")
+      .where({ location_id: locationId, id: itemId })
+      .first();
+
+    if (!stockItem) {
+      return res.status(404).json({ error: "Stock item not found" });
+    }
+
+    // Check if there is enough quantity to reduce
+    if (stockItem.quantity < quantityToReduce) {
+      return res.status(400).json({ error: "Not enough stock available" });
+    }
+
+    // Reduce the quantity
+    await knex("stock")
+      .where({ location_id: locationId, id: itemId })
+      .decrement("quantity", quantityToReduce);
+
+    // Return the updated stock item
+    const updatedStockItem = await knex("stock")
+      .where({ location_id: locationId, id: itemId })
+      .first();
+    res.json(updatedStockItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = {
+  index,
+  findItem,
+  newItem,
+  edit,
+  remove,
+  reduceStockQuantity,
+};
